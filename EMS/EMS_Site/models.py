@@ -17,5 +17,11 @@ class employee_detail(models.Model):
     joining_date = models.DateField()
     jobs = models.ManyToManyField("job",blank=True)
 
+    def __str__(self):
+        return self.first_name
+
 class job(models.Model):
     name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
