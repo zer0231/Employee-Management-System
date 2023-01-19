@@ -12,4 +12,4 @@ def e_detail(request,e_id):
         employee = employee_detail.objects.get(id=e_id)
     except employee_detail.DoesNotExist:
         raise Http404("Employee Not Found")
-    return render(request,"employee_detail.html",{"title":"Employee name"})
+    return render(request,"employee_detail.html",{"title":employee.first_name,'employee':employee})

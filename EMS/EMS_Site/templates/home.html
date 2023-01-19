@@ -1,8 +1,56 @@
 {% extends 'base.html' %}
 {% block title %}{{title}}{% endblock %}
 {% block content %}
-    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+<div class="row">
+    <strong>Employement Management System</strong>
+</div>
+<div class="row align-items-center">
+    <div class="input-group">
+        <label class="form-label" for="search">Search</label>
+        <div id="search-autocomplete" class="form-outline">
+          <input type="search" id="search" class="form-control" />
+        </div>
+      </div>
+</div>
+<div id="items" class="row p-3 ps-1">
     {%for employee in employees%}
-        {{  employee.first_name }}
+    {% if employee.status %}
+    <div id="item" class="col card h-100 col-md-3 mx-2">
+        <div class="card-title text-center">{{  employee.first_name|capfirst }} {{ employee.last_name }}</div>
+        <hr>
+        <div class="card-body clearfix mb-3 shadow-sm">
+            <div class="box">
+                <div>
+                    {% if employee.jobs.all%}
+                    <ul class="list-inline"></ul>
+                    {%for job in employee.jobs.all%}
+                        <li >{{job}}</li>
+                    {%endfor%}
+                     </ul>
+                    {%endif%}
+                    
+                </div>
+            </div>
+            <a href='{% url "Employee-Detail" employee.id %}'>Detail</a>
+        </div>
+    </div>  
+    {% endif %}
     {%endfor%}
+</div>
+
+
+
+</div>
+<script>
+    $(document).ready(function(){
+  $("#search").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#items #item").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
 {% endblock %}
